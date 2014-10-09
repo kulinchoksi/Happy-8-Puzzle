@@ -1,0 +1,21 @@
+{
+  "name": "Happy 8 Puzzle",
+  "description": "A simple board game, where you need to arrange numbers in sequence",
+  "version": "1.0",
+  "manifest_version": 2,
+  "author": "Kulin Choksi",
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "permissions": [
+    "storage"
+  ],
+  "icons": {
+    "16": "icon-16.png",
+    "128": "icon-128.png",
+    "200": "icon-200.png"
+  },
+  "kiosk_enabled": true
+}
