@@ -1,3 +1,9 @@
+/**
+ * @author      Kulin Choksi
+ * @copyright   Copyright (C) 2014 Kulin Choksi
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
 function checkWin() {
   var x = 0;
   while(x <= limit) {
