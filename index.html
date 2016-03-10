@@ -1,26 +1,35 @@
+<!--
+ * @author Kulin Choksi
+ * @copyright  Copyright (C) 2014 Kulin Choksi
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
+-->
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>Happy 8 Puzzle</title>
-<link rel="stylesheet" type="text/css" href="css/style.css" />
+    <title>Happy 8 Puzzle</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
 <center>
   <div id="wrapper">
     <div id="header">
-      <span id="title">Happy 8 puzzle</span>
+      <span id="title">Happy 8 Puzzle</span>
     </div>
     <div>
       <table cellpadding="0" cellspacing="10">
         <tr>
+          <td class="displayBar" id="reset">
+            <div><span>Restart</span></div>
+          </td>
           <td class="displayBar">
             <div id="yourBestScoreContainer">
-              <span id="yourBestScoreTitle">Best Score</span><br />
+              <span id="yourBestScoreTitle">Best</span><br />
               <span id="yourBestScore">?</span>
             </div>
           </td>
-          <td class="displayBar">
-            <div id="close"><span>Close</span></div>
+          <td class="displayBar" id="close">
+            <div><span>Close</span></div>
           </td>
         </tr>
       </table>
