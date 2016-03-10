@@ -1,3 +1,9 @@
+/**
+ * @author      Kulin Choksi
+ * @copyright   Copyright (C) 2014 Kulin Choksi
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
 function checkWin() {
   var x = 0;
   while(x <= limit) {
@@ -36,8 +42,6 @@ function checkWin() {
     
     gameFinished.style.display = 'block';
     gameFinished.onclick = function() {
-      // location.reload();
-      // chrome.runtime.reload();
       resetPuzzle();
     };
   }
@@ -45,7 +49,7 @@ function checkWin() {
 function swap() {
   var cell = this;
 
-  if (cell.innerHTML != "&nbsp;") {
+  if (cell.innerHTML != space) {
     var id = cell.id.substring(2);
     
     // search space position in possible legal moves of clicked cell
@@ -55,7 +59,11 @@ function swap() {
       // swap cells
       var swapCellId = "td" + legalMoveMap[id][swapPosition];
       document.getElementById(swapCellId).innerHTML = cell.innerHTML;      
-      cell.innerHTML = "&nbsp;";
+      cell.innerHTML = space;
+      
+      // swap space class
+      cell.classList.add('space');
+      document.getElementById(swapCellId).classList.remove('space');
       
       // update space position globally
       spacePosition = id;
@@ -79,21 +87,8 @@ Array.prototype.in_array = function(p_val) {
   return false;
 };
 
-/* function genRndm() {
-  while(1) {
-    var newRndm = Math.floor(Math.random()*limit)+1;
-    if(newRndm > 0 && newRndm < gridSize && !rndm.in_array(newRndm)) {
-      rndm[i] = newRndm;
-      i++;
-    }
-    if(i == limit)
-      break;
-  }
-} */
-
 function randomizePuzzle() {
   var rndmMovePosition, rndmMove, cellId, rndmLength;
-  var space = "&nbsp;";
   var rndmMoves = randomMoves;
   steps = 0; // reset global step counter
 
@@ -106,7 +101,7 @@ function randomizePuzzle() {
   
   // take random legal moves of random numbers list
   while (rndmMoves--) {
-    spacePosition = rndm.in_array("&nbsp;"); // find pointer where we can move
+    spacePosition = rndm.in_array(space); // find pointer where we can move
     rndmMovePosition = Math.floor(Math.random() * legalMoveMap[spacePosition].length);
     rndmMove = legalMoveMap[spacePosition][rndmMovePosition];
     
@@ -121,7 +116,10 @@ function randomizePuzzle() {
   for (var k = 0; k < rndmLength; k++) {
     cellId = 'td' + k;
     document.getElementById(cellId).innerHTML = rndm[k];
+    document.getElementById(cellId).classList.remove('space');
   }
+  
+  document.getElementById('td' + spacePosition).classList.add('space');
 }
 
 function genTbl() {
@@ -137,13 +135,6 @@ function genTbl() {
         tableTd.className = 'boardCell';
         tableTd.id = 'td' + k;
         tableTd.onclick = swap;
-        
-        // tableTd.innerHTML = rndm[k];
-        /* if(k < limit) {
-          tableTd.innerHTML = rndm[k];
-        } else {
-          tableTd.innerHTML = '&nbsp;';
-        } */
         
         k++;
         
@@ -184,6 +175,7 @@ var cols = 3;
 var gridSize = rows * cols;
 var limit = gridSize - 1;
 var rndm = new Array(gridSize);
+var space = "&nbsp;";
 var spacePosition = 8;
 var steps = 0;
 var randomMoves = 100; // complexity of puzzle
@@ -204,25 +196,10 @@ randomizePuzzle(); // generate random solvable puzzle
 
 // Close button handler
 window.document.getElementById('close').onclick = function() {
-	chrome.app.window.current().close();
-}
+    chrome.app.window.current().close();
+};
 
-/* (function() {
-    
-  // querySelector, jQuery style
-  var $ = function (selector) {
-    return document.querySelectorAll(selector);
-  };
-
-  // Iterate over <td class="boardCell">
-  // Use querySelector to target class boardCell having <td> tag
-  var boardCells = $('.boardCell');
-
-  // For each <td> having .boardCell
-  for (var i = 0; i < boardCells.length; i++) {
-    var boardCell = boardCells[i];
-    
-    // <td> onclick
-    boardCell.onclick = swap;
-  }
-}) (); */
+// Reset button handler
+window.document.getElementById('reset').onclick = function() {
+    resetPuzzle();
+};
